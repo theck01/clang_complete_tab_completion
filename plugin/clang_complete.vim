@@ -489,6 +489,7 @@ function! ClangComplete(findstart, base)
       endif
       inoremap <expr> <buffer> <C-Y> <SID>HandlePossibleSelectionCtrlY()
       inoremap <expr> <buffer> <CR> <SID>HandlePossibleSelectionEnter()
+      inoremap <expr> <buffer> <Tab> <SID>HandlePossibleSelectionTab()
     endif
     augroup ClangComplete
       au CursorMovedI <buffer> call <SID>TriggerSnippet()
@@ -515,6 +516,14 @@ function! s:HandlePossibleSelectionEnter()
     return "\<C-Y>"
   end
   return "\<CR>"
+endfunction
+
+function! s:HandlePossibleSelectionTab()
+  if pumvisible()
+    let b:snippet_chosen = 1
+    return "\<C-Y>"
+  end
+  return "\<Tab>"
 endfunction
 
 function! s:HandlePossibleSelectionCtrlY()
